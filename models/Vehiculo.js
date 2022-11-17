@@ -22,6 +22,10 @@ const VehiculoSchema = mongoose.Schema({
         ref:'Tiquete',
         required:true
     },
+    celda:{
+        type:Number,
+        required:true
+    },
     usuario:{
         type:String,
         required:true

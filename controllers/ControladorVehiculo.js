@@ -41,6 +41,7 @@ const create = async (req, res) => {
         vehiculo.horaEntrada = req.body.horaEntrada;
         vehiculo.horaSalida = req.body.horaSalida;
         vehiculo.tiquete = req.body.tiquete;
+        vehiculo.celda = req.body.celda;
         vehiculo.usuario = req.body.usuario;
 
         vehiculo =  await vehiculo.save();
@@ -61,7 +62,7 @@ const update = async(req, res) => {
         let vehiculoEncontrado = await Vehiculo.findById({ _id : id });
         if(!vehiculoEncontrado) { return res.status(404).json({mjs: "Vehiculo no encontrado"}) }
 
-        const {  nroPlaca, modelo, horaEntrada, horaSalida, tiquete, usuario } = req.body;
+        const {  nroPlaca, modelo, horaEntrada, horaSalida, tiquete, celda, usuario } = req.body;
 
         let vehiculoExiste = await Vehiculo.findOne({ nroPlaca : nroPlaca, _id: { $ne : id } });
         if(vehiculoExiste) { return res.status(404).json({mjs: "El vehiculo ya existe"}) }
@@ -71,6 +72,7 @@ const update = async(req, res) => {
         vehiculoEncontrado.horaEntrada = horaEntrada;
         vehiculoEncontrado.horaSalida = horaSalida;
         vehiculoEncontrado.tiquete = tiquete;
+        vehiculoEncontrado.celda = celda;
         vehiculoEncontrado.usuario = usuario;
 
         vehiculoEncontrado = await vehiculoEncontrado.save();
