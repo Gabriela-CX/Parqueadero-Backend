@@ -37,6 +37,8 @@ const create = async (req, res) => {
         let suscripcion = new Suscripcion();
         
         suscripcion.tipoSuscripcion = req.body.tipoSuscripcion;
+        suscripcion.precio = req.body.precio;
+        suscripcion.beneficios = req.body.beneficios;
 
         suscripcion =  await suscripcion.save();
 
@@ -56,13 +58,15 @@ const update = async(req, res) => {
         let suscripcionEncontrada = await Suscripcion.findById({ _id : id });
         if(!suscripcionEncontrada) { return res.status(404).json({mjs: "Suscripcion no encontrada"}) }
 
-        const {  tipoSuscripcion } = req.body;
+        const {  tipoSuscripcion, precio, beneficios } = req.body;
 
         let suscripcionExiste = await Suscripcion.findOne({ tipoSuscripcion : tipoSuscripcion, _id: { $ne : id } });
         if(suscripcionExiste) { return res.status(404).json({mjs: "La suscripcion ya existe"}) }
 
         suscripcionEncontrada.tipoSuscripcion = tipoSuscripcion;
-
+        suscripcionEncontrada.precio = precio;
+        suscripcionEncontrada.beneficios = beneficios;
+        
         suscripcionEncontrada = await suscripcionEncontrada.save();
 
         res.status(202).send(suscripcionEncontrada);
